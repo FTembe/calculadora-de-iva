@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Calculadora online de IVA %</title>
+</head>
+<style type="text/css">	
+*{
+	margin: 0;
+	box-sizing: border-box;
+	overflow: hidden;
+	padding: 0;
+	font-family: arial,sans-serif;
+
+
+}
+body{
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	background: #112;
+	
+}
+.content{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0 1rem;
+}
+.wrapper{
+	width: 100%;
+	background: rgba(255, 255, 255, 1);
+	height: auto;
+	padding: 2rem 2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+
+}
+header h1{
+	margin-bottom: 1rem;
+	opacity: .8;
+	font-weight: 500;
+	font-size: 1.8rem;
+}
+header p{
+	opacity: .8;
+	font-size: 0.9rem;
+	margin-bottom: 1rem;
+	line-height: 24px;
+	text-align: justify;
+}
+label{
+	font-size: 14px;
+	opacity: 0.8;
+}
+.input__group{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	margin-bottom: 1rem;
+}
+.input__group input {
+
+	width: 80%;
+	padding: 0.3rem 0.6rem;
+}
+button{
+	border: hidden;
+	background: #112;
+	color: #fff;
+	padding: 0.5rem 1rem;
+	font-family: lato;
+	
+	cursor: pointer;
+	transition: all .6s;
+	margin-bottom: 1rem;
+	text-transform: uppercase;
+}
+button:hover{
+	opacity: .9;
+}
+#result{
+	background: #112;
+	padding: 0.3rem 0.6rem;
+	color: #fff;
+	transition: all 1s;
+}
+#result div{
+	margin: 0.6rem 0 ; 
+	opacity: 0.9;
+	border-bottom: 1px double;
+	padding-bottom: .5rem;transition: all 1s;
+	font-size: 14px;
+}
+#result div span.demo{
+	display: block;
+	padding-top: .5rem;
+	color: #f00;
+}
+@media(min-width: 992px){
+	.wrapper{
+		width: 50%;
+	}
+}
+.copyright{
+
+	position: absolute;
+
+}
+.copyright,.bio{
+	
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	flex-direction: column;
+
+}
+.bio{
+	margin: 1rem 0  0 1rem;
+	align-items: center;
+	text-align: center;
+}
+.img{
+	position: relative;
+	width: 54px;
+	height: auto;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #fff;
+	padding: .3rem;
+	animation: change 2s infinite ease-in-out;
+	
+}
+@keyframes change{
+	from{
+		background: #fff;
+	}
+	to{
+		background: #112;
+	}
+}
+.img img{
+	position: relative;
+	width: 100%;border-radius: 50%;
+}
+.copyright span{
+	margin-top: .6rem;
+	color: #fff;
+	font-size: 12px;
+	text-align: center;
+}
+.copyright span small{
+	font-size: 10px;
+	color: #ddd;
+}
+</style>
+<body>
+	<div class="copyright">
+		<div class="bio">
+			<div class="img">
+			<img src="assets/img/me.png">
+		</div>
+		<span>Francisco Tembe
+			<br><small>franciscojtembe@gmail.com</small></span>
+		</div>
+	</div>
+	<div class="content">
+	<div class="wrapper">
+		<header>
+			<h1>Calculadora de IVA</h1>
+			<p>Calculadora de  precisa de dois valores. Você pode por exemplo, preencher de IVA% e de preços com IVA - e obter o preço sem IVA como resultado. Os valores são arredondados (dois dígitos).</p>
+		</header>
+		<form onsubmit="return false">
+			<div class="input__group">
+				<label>IVA %</label>
+				<input type="text" id="iva" value="17">
+			</div>
+			<div class="input__group">
+				<label>Valor</label>
+				<input type="text" id="value" value="">
+			</div>
+			<div class="button">
+				<button id="add_iva">Com IVA</button>
+				<button id="remove_iva">Sem IVA</button>
+			</div>
+			<div id="result">	</div>
+		</form>
+			</div>	
+		</div>
+		<script type="text/javascript">
+			document.querySelector("#add_iva").addEventListener('click',function(){
+				calculator()
+			})
+
+			document.querySelector("#remove_iva").addEventListener('click',function(){
+				calculator(1)
+			})
+			
+			function calculator(remove=null){
+				let iva    = parseFloat(document.querySelector("#iva").value/100),
+				value  = parseFloat(document.querySelector("#value").value),
+				percent=(value*iva),
+				proccess= !remove?value+percent:value-percent;
+
+				document.querySelector("#result").innerHTML= `
+				<div><span>Iva:</span> ${iva*100} %</div>
+				<div><span>Valor:</span> ${value}</div>
+				<div><span> Valor Final ${!remove?'com':'sem'} IVA</span> ${proccess.toFixed(2)}</div>
+				<div ><span> formula = valor  ${!remove?'+':'-'} ( valor * IVA / 100 )  <br><br</span>
+				<span class="demo"> 
+				${!remove?value+'+('+ value+'*' +iva+')':value+'-('+value+'*'+iva+')'}=${proccess}
+				</span>
+				</div>
+				`
+			}
+		</script>
+
+
+</body>
+</html>
